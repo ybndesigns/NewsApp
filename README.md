@@ -5,4 +5,5 @@ This app was made for the News App project of Udacity's Grow With Google Nanodeg
 
 ## Built with
 [The Guardian](https://www.theguardian.com/us) - The source of all the news articles
+
 [Picasso](https://square.github.io/picasso/) - For loading the external images
