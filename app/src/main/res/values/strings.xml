@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Students\' Mental Health Crisis</string>
+    <string name="no_internet">You are currently not connected to the internet. Please pull down to refresh.</string>
+    <string name="no_news">There\'s no news to display. Please pull down to refresh.</string>
+</resources>
