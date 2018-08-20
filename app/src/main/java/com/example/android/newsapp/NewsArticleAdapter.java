@@ -34,8 +34,13 @@ public class NewsArticleAdapter extends ArrayAdapter {
         NewsArticle currentArticle = (NewsArticle) getItem(position);
 
         ImageView thumbnailView = convertView.findViewById(R.id.thumbnail_imageview);
-        Picasso.get().load(currentArticle.getThumbnail()).into(thumbnailView); //using the Picasso library to load thumbnail pictures
-        Log.i(LOG_TAG, "Picasso works!");
+        String thumbnail = currentArticle.getThumbnail();
+        if (!thumbnail.equals("")) {
+            Picasso.get().load(thumbnail).into(thumbnailView); //using the Picasso library to load thumbnail pictures
+            Log.i(LOG_TAG, "Picasso works!");
+        } else {
+            thumbnailView.setVisibility(View.GONE);
+        }
 
         TextView titleTextView = convertView.findViewById(R.id.title);
         titleTextView.setText(currentArticle.getTitleString());

@@ -4,14 +4,18 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -25,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName(); //for logging purposes
     //String of the URL with the JSON data
-    private static final String REQUEST_URL = "https://content.guardianapis.com/search?show-tags=contributor&show-fields=thumbnail&q=(%22mental%20health%22%20OR%20depression%20OR%20anxiety)%20AND%20(student%20OR%20school%20OR%20education)&api-key=c48ba872-41f7-4824-8a74-774e5af1b001";
+    private static final String REQUEST_URL = "https://content.guardianapis.com/search";
     NewsArticleAdapter adapter;
     ListView listView;
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
 
         //Setting EmptyView to be used when there's nothing to be viewed
         listView.setEmptyView(findViewById(R.id.not_loading_message));
@@ -118,7 +122,38 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<NewsArticle>> onCreateLoader(int id, Bundle args) {
         Log.i(LOG_TAG, "NewsArticleLoader returned");
-        return new NewsArticleLoader(this, REQUEST_URL);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String apiKey = getString(R.string.api_key);
+
+        String orderby = sharedPreferences.getString(
+                getString(R.string.order_by_key),
+                getString(R.string.order_by_default)
+        );
+
+        String educationLevel = sharedPreferences.getString(
+                getString(R.string.education_key),
+                getString(R.string.education_default)
+        );
+
+        Uri baseUri = Uri.parse(REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("show-fields", "thumbnail");
+        if (!orderby.equals("")) {
+            uriBuilder.appendQueryParameter("order-by", orderby);
+        }
+        String searchTerms = "(\"mental health\" OR depression OR anxiety) AND (student OR school OR education)";
+        if (educationLevel.equals("")) {
+            uriBuilder.appendQueryParameter("q", searchTerms);
+        } else {
+            uriBuilder.appendQueryParameter("q", searchTerms + " AND " + educationLevel);
+        }
+        uriBuilder.appendQueryParameter("api-key", apiKey);
+
+        Log.i("Resulting URL", uriBuilder.toString());
+        return new NewsArticleLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -153,5 +188,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<NewsArticle>> loader) {
         adapter.clear();
         Log.i(LOG_TAG, "onLoaderReset called");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

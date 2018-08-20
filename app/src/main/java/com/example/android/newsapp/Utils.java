@@ -37,16 +37,19 @@ public final class Utils {
 
                 String link = currentResult.getString("webUrl");
 
-                JSONObject fields = currentResult.getJSONObject("fields");
-                String thumbnail = fields.getString("thumbnail");
+                JSONObject fields = currentResult.optJSONObject("fields");
+                String thumbnail = "";
+                if (fields != null) { //Sometimes in older articles there are no thumbnails
+                    thumbnail = fields.optString("thumbnail");
+                } else {
+                    Log.i(LOG_TAG, "No thumbnail");
+                }
 
                 String author = "";
-
                 JSONArray tags = currentResult.optJSONArray("tags");
                 JSONObject tagBlock = tags.optJSONObject(0);
                 if (tagBlock != null) { //sometimes there is not an author listed; this is to handle those moments
                     author = tagBlock.optString("webTitle");
-                    Log.i(LOG_TAG, "We got out the author!");
                 } else {
                     Log.i(LOG_TAG, "We did not get the author out");
                 }

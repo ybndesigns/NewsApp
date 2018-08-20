@@ -2,4 +2,48 @@
     <string name="app_name">Students\' Mental Health Crisis</string>
     <string name="no_internet">You are currently not connected to the internet. Please pull down to refresh.</string>
     <string name="no_news">There\'s no news to display. Please pull down to refresh.</string>
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">News Article Settings</string>
+
+    <!--API key for URI parsing-->
+    <string name="api_label">api-key</string>
+    <string name="api_key">c48ba872-41f7-4824-8a74-774e5af1b001</string>
+
+    <!--"Order By" labels and options-->
+    <string name="order_by_label">Order By</string>
+    <string name="order_by_key">order-by</string>
+    <string name="order_by_default">@string/order_by_none</string>
+
+    <string name="order_by_none">None</string>
+    <string name="order_by_null"></string>
+
+    <string name="order_by_newest_label">Newest</string>
+    <string name="order_by_newest_value">newest</string>
+
+    <string name="order_by_oldest_label">Oldest</string>
+    <string name="order_by_oldest_value">oldest</string>
+
+    <string name="order_by_relevance_label">Relevance</string>
+    <string name="order_by_relevance_value">relevance</string>
+
+
+    <!--"Education Level" labels and options-->
+    <string name="education_label">Education Level</string>
+    <string name="education_key">education-level</string>
+    <string name="education_default">@string/education_any_label</string>
+
+    <string name="education_any_label">Any Education Level</string>
+    <string name="education_any_value"></string>
+
+    <string name="education_elementary_label">Elementary</string>
+    <string name="education_elementary_value">(\"elementary school\" OR \"primary school\")</string>
+
+    <string name="education_jr_high_label">Junior High</string>
+    <string name="education_jr_high_value">(\"junior high\" OR \"middle school\")</string>
+
+    <string name="education_high_label">High School</string>
+    <string name="education_high_value">(\"high school\" OR \"secondary school\")</string>
+
+    <string name="education_college_label">College/University</string>
+    <string name="education_college_value">(college OR university OR \"higher education\")</string>
 </resources>
