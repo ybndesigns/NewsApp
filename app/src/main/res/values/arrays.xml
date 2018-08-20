@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="order_by_labels">
+        <item>@string/order_by_none</item>
+        <item>@string/order_by_relevance_label</item>
+        <item>@string/order_by_newest_label</item>
+        <item>@string/order_by_oldest_label</item>
+    </string-array>
+
+    <string-array name="order_by_values">
+        <item>@string/order_by_null</item>
+        <item>@string/order_by_relevance_value</item>
+        <item>@string/order_by_newest_value</item>
+        <item>@string/order_by_oldest_value</item>
+    </string-array>
+
+    <string-array name="education_labels">
+        <item>@string/education_any_label</item>
+        <item>@string/education_elementary_label</item>
+        <item>@string/education_jr_high_label</item>
+        <item>@string/education_high_label</item>
+        <item>@string/education_college_label</item>
+    </string-array>
+
+    <string-array name="education_values">
+        <item>@string/education_any_value</item>
+        <item>@string/education_elementary_value</item>
+        <item>@string/education_jr_high_value</item>
+        <item>@string/education_high_value</item>
+        <item>@string/education_college_value</item>
+    </string-array>
+</resources>
